@@ -8,6 +8,8 @@ onMounted(async () => {
     <div>
         <NuxtLayout>
             <NuxtPage />
+            <Toast />
+            <ConfirmDialog></ConfirmDialog>
         </NuxtLayout>
     </div>
 </template>

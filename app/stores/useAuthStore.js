@@ -19,8 +19,8 @@ export const useAuthStore = defineStore('auth', () => {
             user.value = data.user
             return {success: success, user: data.user, message: data.message || 'Login successful'};
         } catch (e) {
-            error.value = e.data
-            return {success: false, errors: e.data?.errors, message: e.data?.message || 'Login failed'};
+            error.value = e.data;
+            return {success: false, errors: e.data?.errors || [], message: e.data?.message || e.message || 'Login failed'};
         } finally {
             loading.value = false
         }
@@ -48,10 +48,12 @@ export const useAuthStore = defineStore('auth', () => {
                 storage.token.remove()
                 return {success: true, message: 'User logged out'};
             }
+            console.log('logout failed', data);
             return {success: false, message: 'Logout failed'};
         } catch (e) {
+            console.log('logout error', e);
             error.value = e.data
-            return {success: false, errors: e.data?.errors, message: e.data?.message || 'Logout failed'};
+            return {success: false, errors: e.data?.errors, message: e.data?.message || e.message || 'Logout failed'};
         } finally {
             loading.value = false
         }

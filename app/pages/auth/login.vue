@@ -7,6 +7,8 @@ definePageMeta(
         middleware: ['guest']
     }
 )
+const toast = useToast();
+
 const email = ref('');
 const password = ref('');
 const checked = ref(false);
@@ -14,12 +16,13 @@ const authErrors = ref([]);
 
 const login = async () => {
     const authStore = useAuthStore();
-    let {success, errors} = await authStore.login(email.value, password.value);
+    let {success, errors, message} = await authStore.login(email.value, password.value);
     if (success) {
+        toast.add({ severity: 'success', summary: 'Success!', detail: message, life: 3000 });
         navigateTo('/');
     } else {
+        toast.add({ severity: 'error', summary: 'Error!', detail: message, life: 3000 });
         authErrors.value = errors;
-        console.log(authStore.error);
     }
 }
 </script>
