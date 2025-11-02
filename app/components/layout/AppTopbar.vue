@@ -3,11 +3,13 @@ import AppConfigurator from './AppConfigurator.vue';
 
 const { toggleMenu, toggleDarkMode, isDarkTheme } = useLayout();
 const op = ref(null);
-
+const toast = useToast();
 const logOut = async () => {
     const auth = useAuthStore();
-    let status = await auth.logout();
-    if (status) {
+    let {success, message} = await auth.logout();
+    if (success) {
+        console.log('logged out');
+        toast.add({ severity: 'success', summary: 'Success!', detail: message, life: 3000 });
         navigateTo('auth/login');
     }
 };

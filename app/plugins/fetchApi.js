@@ -1,7 +1,6 @@
 import {storage} from '~/utils/storageUtils'
 export default defineNuxtPlugin(() => {
     const config = useRuntimeConfig()
-    const token = storage.token.get();
 
     const api = $fetch.create({
         baseURL: config.public.baseApi,
@@ -12,7 +11,7 @@ export default defineNuxtPlugin(() => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             }
-
+            const token = storage.token.get();
             if (token) {
                 headers.Authorization = `Bearer ${token}`
             }
